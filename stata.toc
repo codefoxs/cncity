@@ -1,0 +1,3 @@
+v 0.1.1
+
+p 'CNCITY': module to standardize Chinese city names.
