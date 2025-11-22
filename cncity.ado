@@ -1,3 +1,4 @@
+*! version 0.1.1 23Nov2025 公众号：凯恩斯学计量
 capture program drop cncity
 program define cncity
     syntax varlist 
