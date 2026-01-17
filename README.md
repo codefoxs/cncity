@@ -22,7 +22,7 @@ cncity city
 
 ## Variables
 
-`city_stname`: 标准城市名称，必须以“市”结尾
+`city_stname`: 标准城市名称，必须以“市”或“特别行政区”结尾
 
 `city_type`: 城市类型，如地级市、县级市、直辖市等
 
