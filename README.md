@@ -30,6 +30,8 @@ cncity city
 
 `city_special`: 一些特殊需求的匹配，如地区、自治州、盟
 
+`special_ctlist`: 特殊地区的城市名单
+
 ## Example
 
-![](./README/image-20251123024815238.png)
+![image-20260118035427880](./README/image-20260118035427880.png)
