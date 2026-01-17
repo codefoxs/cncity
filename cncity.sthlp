@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 0.1.1 23Nov2025}{...}
+{* *! version 0.1.2 18Jan2026}{...}
 {vieweralsosee "[R] regexm" "help regexm"}{...}
 {vieweralsosee "[R] replace" "help replace"}{...}
 {vieweralsosee "" "--"}{...}
@@ -47,6 +47,9 @@ See: {browse "https://mp.weixin.qq.com/s/Ox6z8b4P-mruAy7l_iGZWQ":4个直辖市�
 {p_end}
 {pstd}
 {bf:city_special}: Some special demand, such as matching with regions, autonomous regions, and leagues.
+{p_end}
+{pstd}
+{bf:special_ctlist}: The city list for city_special.
 {p_end}
 
 {marker author}{...}

@@ -1,3 +1,4 @@
+*! version 0.1.2 18Jan2026 修复了一些特殊地区的匹配 bug      公众号：凯恩斯学计量
 *! version 0.1.1 23Nov2025 公众号：凯恩斯学计量
 capture program drop cncity
 program define cncity
@@ -12,6 +13,7 @@ program define cncity
         gen city_type = ""
         gen city_prov = ""
         gen city_special = ""
+		gen special_ctlist = ""
     }
     
     dis as res "正在标准化城市名称，请稍候..."
@@ -459,48 +461,130 @@ program define cncity
         }
         
         * --- 地区、州、盟 ---
-        replace city_special = "大兴安岭地区" if regexm(city_stname, "漠河")
-        // 阿里地区只有县，没有市
-        replace city_special = "塔城地区" if regexm(city_stname, "塔城|乌苏|沙湾")
-        replace city_special = "阿勒泰地区" if regexm(city_stname, "阿勒泰")
-        replace city_special = "喀什地区" if regexm(city_stname, "喀什")
-        replace city_special = "和田地区" if regexm(city_stname, "和田")
-        replace city_special = "阿克苏地区" if regexm(city_stname, "阿克苏|库车")
+        replace city_special = "大兴安岭地区" if regexm(`v', "漠河|大兴安岭")
+		replace city_special = "阿里地区" if regexm(`v', "阿里")
+        replace city_special = "塔城地区" if regexm(`v', "塔城|乌苏|沙湾")
+        replace city_special = "阿勒泰地区" if regexm(`v', "阿勒泰")
+        replace city_special = "喀什地区" if regexm(`v', "喀什")
+        replace city_special = "和田地区" if regexm(`v', "和田")
+        replace city_special = "阿克苏地区" if regexm(`v', "阿克苏|库车")
         
-        replace city_special = "延边朝鲜族自治州" if regexm(city_stname, "延吉|图们|敦化|珲春|龙井|和龙")
-        replace city_special = "恩施土家族苗族自治州" if regexm(city_stname, "恩施|利川")
-        replace city_special = "湘西土家族苗族自治州" if regexm(city_stname, "吉首")
-        replace city_special = "阿坝藏族羌族自治州" if regexm(city_stname, "马尔康")
-        replace city_special = "甘孜藏族自治州" if regexm(city_stname, "康定")
-        replace city_special = "凉山彝族自治州" if regexm(city_stname, "西昌")
-        replace city_special = "黔东南苗族侗族自治州" if regexm(city_stname, "凯里")
-        replace city_special = "黔南布依族苗族自治州" if regexm(city_stname, "都匀|福泉")
-        replace city_special = "黔西南布依族苗族自治州" if regexm(city_stname, "兴义|兴仁")
-        replace city_special = "楚雄彝族自治州" if regexm(city_stname, "楚雄|禄丰")
-        replace city_special = "大理白族自治州" if regexm(city_stname, "大理")
-        replace city_special = "德宏傣族景颇族自治州" if regexm(city_stname, "瑞丽|芒")
-        replace city_special = "迪庆藏族自治州" if regexm(city_stname, "香格里拉")
-        replace city_special = "红河哈尼族彝族自治州" if regexm(city_stname, "个旧|开远|蒙自|弥勒")
-        replace city_special = "怒江傈僳族自治州" if regexm(city_stname, "泸水")
-        replace city_special = "文山壮族苗族自治州" if regexm(city_stname, "文山")
-        replace city_special = "西双版纳傣族自治州" if regexm(city_stname, "景洪")
-        replace city_special = "甘南藏族自治州" if regexm(city_stname, "合作")
-        replace city_special = "临夏回族自治州" if regexm(city_stname, "临夏")
-        replace city_special = "海西蒙古族藏族自治州" if regexm(city_stname, "德令哈|格尔木|茫崖")
-        // 海南藏族自治州只有县没有市
-        // 海北藏族自治州只有县没有市
-        // 黄南藏族自治州只有县没有市
-        // 果洛藏族自治州只有县没有市
-        replace city_special = "玉树藏族自治州" if regexm(city_stname, "玉树")
-        replace city_special = "巴音郭楞蒙古自治州" if regexm(city_stname, "库尔勒")
-        replace city_special = "博尔塔拉蒙古自治州" if regexm(city_stname, "博乐|阿拉山口")
-        replace city_special = "昌吉回族自治州" if regexm(city_stname, "昌吉|阜康")
-        replace city_special = "克孜勒苏柯尔克孜自治州" if regexm(city_stname, "阿图什")
-        replace city_special = "伊犁哈萨克自治州" if regexm(city_stname, "伊宁|奎屯|霍尔果斯")
+        replace city_special = "延边朝鲜族自治州" if regexm(`v', "延吉|图们|敦化|珲春|龙井|和龙|延边")
+        replace city_special = "恩施土家族苗族自治州" if regexm(`v', "恩施|利川")
+        replace city_special = "湘西土家族苗族自治州" if regexm(`v', "吉首|湘西")
+        replace city_special = "阿坝藏族羌族自治州" if regexm(`v', "马尔康|阿坝")
+        replace city_special = "甘孜藏族自治州" if regexm(`v', "康定|甘孜")
+        replace city_special = "凉山彝族自治州" if regexm(`v', "西昌|凉山")
+        replace city_special = "黔东南苗族侗族自治州" if regexm(`v', "凯里|黔东南")
+        replace city_special = "黔南布依族苗族自治州" if regexm(`v', "都匀|福泉|黔南")
+        replace city_special = "黔西南布依族苗族自治州" if regexm(`v', "兴义|兴仁|黔西南")
+        replace city_special = "楚雄彝族自治州" if regexm(`v', "楚雄|禄丰")
+        replace city_special = "大理白族自治州" if regexm(`v', "大理")
+        replace city_special = "德宏傣族景颇族自治州" if regexm(`v', "瑞丽|芒|德宏")
+        replace city_special = "迪庆藏族自治州" if regexm(`v', "香格里拉|迪庆")
+        replace city_special = "红河哈尼族彝族自治州" if regexm(`v', "个旧|开远|蒙自|弥勒|红河")
+        replace city_special = "怒江傈僳族自治州" if regexm(`v', "泸水|怒江")
+        replace city_special = "文山壮族苗族自治州" if regexm(`v', "文山")
+        replace city_special = "西双版纳傣族自治州" if regexm(`v', "景洪|西双版纳")
+        replace city_special = "甘南藏族自治州" if regexm(`v', "合作|甘南")
+        replace city_special = "临夏回族自治州" if regexm(`v', "临夏")
+        replace city_special = "海西蒙古族藏族自治州" if regexm(`v', "德令哈|格尔木|茫崖|海西蒙古")
+        replace city_special = "海南藏族自治州" if regexm(`v', "海南藏族")
+        replace city_special = "海北藏族自治州" if regexm(`v', "海北藏族")
+        replace city_special = "黄南藏族自治州" if regexm(`v', "黄南藏族")
+        replace city_special = "果洛藏族自治州" if regexm(`v', "果洛藏族")
+        replace city_special = "玉树藏族自治州" if regexm(`v', "玉树")
+        replace city_special = "巴音郭楞蒙古自治州" if regexm(`v', "库尔勒|巴音郭楞")
+        replace city_special = "博尔塔拉蒙古自治州" if regexm(`v', "博乐|阿拉山口|博尔塔拉")
+        replace city_special = "昌吉回族自治州" if regexm(`v', "昌吉|阜康")
+        replace city_special = "克孜勒苏柯尔克孜自治州" if regexm(`v', "阿图什|克孜勒苏柯尔克孜")
+        replace city_special = "伊犁哈萨克自治州" if regexm(`v', "伊宁|奎屯|霍尔果斯|伊犁")
         
-        replace city_special = "兴安盟" if regexm(city_stname, "乌兰浩特|阿尔山")
-        replace city_special = "锡林郭勒盟" if regexm(city_stname, "锡林浩特|二连浩特")
-        // 阿拉善盟不包含城市
+        replace city_special = "兴安盟" if regexm(`v', "乌兰浩特|阿尔山|兴安盟") | `v' == "兴安"
+        replace city_special = "锡林郭勒盟" if regexm(`v', "锡林浩特|二连浩特|锡林")
+        replace city_special = "阿拉善盟" if regexm(`v', "阿拉善")
+		
+		// 去除错误将地区、州、盟命名为城市的观测
+		replace city_stname  = "" if regexm(`v', "地区|自治州|盟")
+		replace city_type    = "" if regexm(`v', "地区|自治州|盟")
+		
+		// 匹配省份名称
+		replace city_prov = "黑龙江省" if city_special == "大兴安岭地区" & mi(city_prov)
+		replace city_prov = "西藏自治区" if city_special == "阿里地区" & mi(city_prov)
+		replace city_prov = "新疆维吾尔自治区" if city_special == "塔城地区" & mi(city_prov)
+		replace city_prov = "新疆维吾尔自治区" if city_special == "阿勒泰地区" & mi(city_prov)
+		replace city_prov = "新疆维吾尔自治区" if city_special == "喀什地区" & mi(city_prov)
+		replace city_prov = "新疆维吾尔自治区" if city_special == "和田地区" & mi(city_prov)
+		replace city_prov = "新疆维吾尔自治区" if city_special == "阿克苏地区" & mi(city_prov)
+		replace city_prov = "新疆维吾尔自治区" if city_special == "巴音郭楞蒙古自治州" & mi(city_prov)
+		replace city_prov = "新疆维吾尔自治区" if city_special == "博尔塔拉蒙古自治州" & mi(city_prov)
+		replace city_prov = "新疆维吾尔自治区" if city_special == "昌吉回族自治州" & mi(city_prov)
+		replace city_prov = "新疆维吾尔自治区" if city_special == "克孜勒苏柯尔克孜自治州" & mi(city_prov)
+		replace city_prov = "新疆维吾尔自治区" if city_special == "伊犁哈萨克自治州" & mi(city_prov)
+		replace city_prov = "吉林省" if city_special == "延边朝鲜族自治州" & mi(city_prov)
+		replace city_prov = "湖北省" if city_special == "恩施土家族苗族自治州" & mi(city_prov)
+		replace city_prov = "湖南省" if city_special == "湘西土家族苗族自治州" & mi(city_prov)
+		replace city_prov = "四川省" if city_special == "阿坝藏族羌族自治州" & mi(city_prov)
+		replace city_prov = "四川省" if city_special == "甘孜藏族自治州" & mi(city_prov)
+		replace city_prov = "四川省" if city_special == "凉山彝族自治州" & mi(city_prov)
+		replace city_prov = "贵州省" if city_special == "黔东南苗族侗族自治州" & mi(city_prov)
+		replace city_prov = "贵州省" if city_special == "黔南布依族苗族自治州" & mi(city_prov)
+		replace city_prov = "贵州省" if city_special == "黔西南布依族苗族自治州" & mi(city_prov)
+		replace city_prov = "云南省" if city_special == "楚雄彝族自治州" & mi(city_prov)
+		replace city_prov = "云南省" if city_special == "大理白族自治州" & mi(city_prov)
+		replace city_prov = "云南省" if city_special == "德宏傣族景颇族自治州" & mi(city_prov)
+		replace city_prov = "云南省" if city_special == "迪庆藏族自治州" & mi(city_prov)
+		replace city_prov = "云南省" if city_special == "红河哈尼族彝族自治州" & mi(city_prov)
+		replace city_prov = "云南省" if city_special == "怒江傈僳族自治州" & mi(city_prov)
+		replace city_prov = "云南省" if city_special == "文山壮族苗族自治州" & mi(city_prov)
+		replace city_prov = "云南省" if city_special == "西双版纳傣族自治州" & mi(city_prov)
+		replace city_prov = "甘肃省" if city_special == "甘南藏族自治州" & mi(city_prov)
+		replace city_prov = "甘肃省" if city_special == "临夏回族自治州" & mi(city_prov)
+		replace city_prov = "青海省" if city_special == "海西蒙古族藏族自治州" & mi(city_prov)
+		replace city_prov = "青海省" if city_special == "海南藏族自治州" & mi(city_prov)
+		replace city_prov = "青海省" if city_special == "海北藏族自治州" & mi(city_prov)
+		replace city_prov = "青海省" if city_special == "黄南藏族自治州" & mi(city_prov)
+		replace city_prov = "青海省" if city_special == "果洛藏族自治州" & mi(city_prov)
+		replace city_prov = "青海省" if city_special == "玉树藏族自治州" & mi(city_prov)
+		replace city_prov = "内蒙古自治区" if city_special == "兴安盟" & mi(city_prov)
+		replace city_prov = "内蒙古自治区" if city_special == "锡林郭勒盟" & mi(city_prov)
+		replace city_prov = "内蒙古自治区" if city_special == "阿拉善盟" & mi(city_prov)
+		
+		// 特殊地区城市名单
+		replace special_ctlist = "漠河市" if city_special == "大兴安岭地区"
+		replace special_ctlist = "塔城市,乌苏市,沙湾市" if city_special == "塔城地区"
+		replace special_ctlist = "阿勒泰市" if city_special == "阿勒泰地区"
+		replace special_ctlist = "喀什市" if city_special == "喀什地区"
+		replace special_ctlist = "和田市" if city_special == "和田地区"
+		replace special_ctlist = "阿克苏市,库车市" if city_special == "阿克苏地区"
+		replace special_ctlist = "库尔勒市" if city_special == "巴音郭楞蒙古自治州"
+		replace special_ctlist = "博乐市,阿拉山口市" if city_special == "博尔塔拉蒙古自治州"
+		replace special_ctlist = "昌吉市,阜康市" if city_special == "昌吉回族自治州"
+		replace special_ctlist = "阿图什市" if city_special == "克孜勒苏柯尔克孜自治州"
+		replace special_ctlist = "伊宁市,奎屯市,霍尔果斯市" if city_special == "伊犁哈萨克自治州"
+		replace special_ctlist = "延吉市,图们市,敦化市,珲春市,龙井市,和龙市" if city_special == "延边朝鲜族自治州"
+		replace special_ctlist = "恩施市,利川市" if city_special == "恩施土家族苗族自治州"
+		replace special_ctlist = "吉首市" if city_special == "湘西土家族苗族自治州"
+		replace special_ctlist = "马尔康市" if city_special == "阿坝藏族羌族自治州"
+		replace special_ctlist = "康定市" if city_special == "甘孜藏族自治州"
+		replace special_ctlist = "西昌市" if city_special == "凉山彝族自治州"
+		replace special_ctlist = "凯里市" if city_special == "黔东南苗族侗族自治州"
+		replace special_ctlist = "都匀市,福泉市" if city_special == "黔南布依族苗族自治州"
+		replace special_ctlist = "兴义市,兴仁市" if city_special == "黔西南布依族苗族自治州"
+		replace special_ctlist = "楚雄市,禄丰市" if city_special == "楚雄彝族自治州"
+		replace special_ctlist = "大理市" if city_special == "大理白族自治州"
+		replace special_ctlist = "瑞丽市,芒市" if city_special == "德宏傣族景颇族自治州"
+		replace special_ctlist = "香格里拉市" if city_special == "迪庆藏族自治州"
+		replace special_ctlist = "个旧市,开远市,蒙自市,弥勒市" if city_special == "红河哈尼族彝族自治州"
+		replace special_ctlist = "泸水市" if city_special == "怒江傈僳族自治州"
+		replace special_ctlist = "文山市" if city_special == "文山壮族苗族自治州"
+		replace special_ctlist = "景洪市" if city_special == "西双版纳傣族自治州"
+		replace special_ctlist = "合作市" if city_special == "甘南藏族自治州"
+		replace special_ctlist = "临夏市" if city_special == "临夏回族自治州"
+		replace special_ctlist = "德令哈市,格尔木市,茫崖市" if city_special == "海西蒙古族藏族自治州"
+		replace special_ctlist = "玉树市" if city_special == "玉树藏族自治州"
+		replace special_ctlist = "乌兰浩特市,阿尔山市" if city_special == "兴安盟"
+		replace special_ctlist = "锡林浩特市,二连浩特市" if city_special == "锡林郭勒盟"
     }
     display as res "标准化完成。"
 end
