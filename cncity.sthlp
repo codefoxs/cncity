@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 0.1.2 18Jan2026}{...}
+{* *! version 0.1.3 24Jan2026}{...}
 {vieweralsosee "[R] regexm" "help regexm"}{...}
 {vieweralsosee "[R] replace" "help replace"}{...}
 {vieweralsosee "" "--"}{...}
