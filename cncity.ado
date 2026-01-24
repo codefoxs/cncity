@@ -1,4 +1,5 @@
-*! version 0.1.2 18Jan2026 修复了一些特殊地区的匹配 bug      公众号：凯恩斯学计量
+*! version 0.1.3 24Jan2026 Bug fixed Issue #1 @sammybaby233
+*! version 0.1.2 18Jan2026 修复了一些特殊地区的匹配 bug
 *! version 0.1.1 23Nov2025 公众号：凯恩斯学计量
 capture program drop cncity
 program define cncity
@@ -82,7 +83,7 @@ program define cncity
         local diji "沈阳 大连 鞍山 抚顺 本溪 丹东 锦州 营口 阜新 辽阳 盘锦 铁岭 朝阳 葫芦岛"
         local xian "新民 瓦房店 庄河 海城 东港 凤城 凌海 北镇 盖州 大石桥 灯塔 调兵山 开原 北票 凌源 兴城"
         foreach c of local diji {
-            replace city_stname = "`c'市" if regexm(`v', "`c'") & city_stname == ""
+            replace city_stname = "`c'市" if regexm(`v', "`c'") & city_stname == "" & !regexm(`v', "马鞍山") // issue #1: 鞍山市和马鞍山市匹配错误
             replace city_type = "地级市" if city_stname == "`c'市"
             replace city_prov = "`prov'" if city_stname == "`c'市"
         }
