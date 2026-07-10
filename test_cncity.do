@@ -29,6 +29,16 @@ end
 run "D:\Code\Github\cncity\cncity.ado"
 cncity city
 
+* 默认不生成 city_special / special_ctlist
+capture confirm variable city_special
+assert _rc != 0
+capture confirm variable special_ctlist
+assert _rc != 0
+* 特殊地区的省份回填在无 detail 时也应生效
+assert city_stname == "" & city_prov == "内蒙古自治区" in 8
+
+cncity city, d replace
+
 assert city_stname == "北京市"   & city_type == "直辖市" & city_prov == "北京市" & city_code == "110000" in 1
 assert city_stname == "石家庄市" & city_type == "地级市" & city_prov == "河北省" & city_code == "130100" in 2
 * 鞍山排除只作用于鞍山：马鞍山应匹配安徽马鞍山市
@@ -39,7 +49,6 @@ assert city_stname == "沈阳市"   & city_code == "210100" in 5
 assert city_stname == "芒市" & city_prov == "云南省" & city_code == "533103" in 6
 * 茫崖不应误配芒市
 assert city_stname == "茫崖市" & city_prov == "青海省" & city_code == "632803" in 7
-* 特殊地区的省份回填在无 detail 时也应生效
 assert city_stname == "" & city_prov == "内蒙古自治区" in 8
 assert city_stname == "锡林浩特市" & city_code == "152502" in 9
 assert city_stname == "恩施市" & city_prov == "湖北省" & city_code == "422801" in 10
@@ -48,12 +57,6 @@ assert city_stname == "台北市" & city_prov == "台湾省" & city_code == "" i
 assert city_stname == "义乌市" & city_prov == "浙江省" & city_code == "330782" in 13
 assert city_stname == "" & city_code == "" in 14
 assert city_stname == "" & city_prov == "新疆维吾尔自治区" & city_code == "" in 16
-
-* 默认不生成 city_special / special_ctlist
-capture confirm variable city_special
-assert _rc != 0
-capture confirm variable special_ctlist
-assert _rc != 0
 
 di as res "TEST 1 PASSED: 默认运行（含 city_code，无 special 变量）"
 
