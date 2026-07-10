@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 0.1.3 24Jan2026}{...}
+{* *! version 0.2.0 10Jul2026}{...}
 {vieweralsosee "[R] regexm" "help regexm"}{...}
 {vieweralsosee "[R] replace" "help replace"}{...}
 {vieweralsosee "" "--"}{...}
@@ -15,10 +15,25 @@
 
 {marker syntax}{...}
 {title:Syntax}
-{p 8 14 4}{cmd:cncity} {it:city_string}
+{p 8 14 4}{cmd:cncity} {it:city_string} {ifin} [{cmd:,} {opt replace}]
 
 {pstd}
-{it:city_string} is a variable with standardized or non-standardized city names.
+{it:city_string} is a string variable with standardized or non-standardized city names.
+{p_end}
+
+{marker options}{...}
+{title:Options}
+
+{phang}
+{opt replace} allows {cmd:cncity} to overwrite the generated variables
+({bf:city_stname}, {bf:city_type}, {bf:city_prov}, {bf:city_special}, {bf:special_ctlist})
+if they already exist. Without this option, {cmd:cncity} exits with an error
+when any of them exists.
+{p_end}
+
+{pstd}
+After matching, {cmd:cncity} reports the number of observations matched to a city,
+matched only to a prefecture/league (city_special), and unmatched.
 {p_end}
 
 {marker standarization}{...}
