@@ -1,10 +1,10 @@
-v 0.2.0
+v 0.3.0
 d 'CNCITY': module to standardize Chinese city names.
 d KW: China
 d KW: City
 d KW: Province
 d 
-d Distribution-Date: 20260710
+d Distribution-Date: 20260711
 d 
 
 f cncity.ado

@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 0.2.0 10Jul2026}{...}
+{* *! version 0.3.0 11Jul2026}{...}
 {vieweralsosee "[R] regexm" "help regexm"}{...}
 {vieweralsosee "[R] replace" "help replace"}{...}
 {vieweralsosee "" "--"}{...}
@@ -15,7 +15,7 @@
 
 {marker syntax}{...}
 {title:Syntax}
-{p 8 14 4}{cmd:cncity} {it:city_string} {ifin} [{cmd:,} {opt replace}]
+{p 8 14 4}{cmd:cncity} {it:city_string} {ifin} [{cmd:,} {opt replace} {opt d:etail}]
 
 {pstd}
 {it:city_string} is a string variable with standardized or non-standardized city names.
@@ -26,9 +26,15 @@
 
 {phang}
 {opt replace} allows {cmd:cncity} to overwrite the generated variables
-({bf:city_stname}, {bf:city_type}, {bf:city_prov}, {bf:city_special}, {bf:special_ctlist})
+({bf:city_stname}, {bf:city_type}, {bf:city_prov}, {bf:city_code},
+{bf:city_special}, {bf:special_ctlist})
 if they already exist. Without this option, {cmd:cncity} exits with an error
 when any of them exists.
+{p_end}
+
+{phang}
+{opt d:etail} keeps {bf:city_special} and {bf:special_ctlist} in the dataset.
+By default these two variables are used internally and dropped before exit.
 {p_end}
 
 {pstd}
@@ -61,10 +67,15 @@ See: {browse "https://mp.weixin.qq.com/s/Ox6z8b4P-mruAy7l_iGZWQ":4个直辖市�
 {bf:city_prov}: The province of the city, or itself if it is a municipality.
 {p_end}
 {pstd}
-{bf:city_special}: Some special demand, such as matching with regions, autonomous regions, and leagues.
+{bf:city_code}: 6-digit administrative division code (GB/T 2260). Prefecture-level
+cities end in "00"; county-level cities carry their full 6-digit code.
+Empty for Taiwan cities and unmatched observations.
 {p_end}
 {pstd}
-{bf:special_ctlist}: The city list for city_special.
+{bf:city_special} (only with {opt detail}): Some special demand, such as matching with regions, autonomous regions, and leagues.
+{p_end}
+{pstd}
+{bf:special_ctlist} (only with {opt detail}): The city list for city_special.
 {p_end}
 
 {marker author}{...}
